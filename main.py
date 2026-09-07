@@ -71,4 +71,3 @@ finally:
     servo.detach()
     lcd.clear()
     GPIO.cleanup()
-```
