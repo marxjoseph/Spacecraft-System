@@ -1,8 +1,9 @@
+import RPi.GPIO as GPIO
 from gpiozero import AngularServo, Button
 from RPLCD.gpio import CharLCD
 from time import sleep
-import RPi.GPIO as GPIO
-# Servo
+
+# Servo: GPIO18
 servo = AngularServo(
     18,
     min_angle=-45,
@@ -11,10 +12,10 @@ servo = AngularServo(
     max_pulse_width=2/1000
 )
 
-# Button
-button = Button(17)
+# Button: GPIO17
+button = Button(17, pull_up=True)
 
-# LCD
+# LCD1602
 lcd = CharLCD(
     numbering_mode=GPIO.BCM,
     cols=16,
@@ -24,10 +25,8 @@ lcd = CharLCD(
     pins_data=[23, 22, 27, 4]
 )
 
-# Starting position
 servo.angle = 0
 
-# Starting LCD message
 lcd.clear()
 lcd.write_string("SPACECRAFT")
 lcd.cursor_pos = (1, 0)
@@ -35,16 +34,13 @@ lcd.write_string("STATUS: READY")
 
 try:
     while True:
-
         if button.is_pressed:
 
-            # LCD says actuator is working
             lcd.clear()
             lcd.write_string("SPACECRAFT")
             lcd.cursor_pos = (1, 0)
             lcd.write_string("ACTUATING...")
 
-            # Move servo
             servo.angle = 45
             sleep(1)
 
@@ -54,13 +50,12 @@ try:
             servo.angle = 0
             sleep(1)
 
-            # Return to ready
             lcd.clear()
             lcd.write_string("SPACECRAFT")
             lcd.cursor_pos = (1, 0)
             lcd.write_string("STATUS: READY")
 
-            button.wait_for_release()
+            sleep(0.5)
 
         sleep(0.05)
 
