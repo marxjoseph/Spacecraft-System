@@ -25,8 +25,8 @@ lcd = CharLCD(
     pins_data=[23, 22, 27, 4]
 )
 
+# Initialize default values
 servo.angle = 0
-
 lcd.clear()
 lcd.write_string("SPACECRAFT")
 lcd.cursor_pos = (1, 0)
@@ -34,19 +34,20 @@ lcd.write_string("STATUS: READY")
 
 try:
     while True:
+        # Button pressed to fuel
         if button.is_pressed:
 
+            # Display Data
             lcd.clear()
             lcd.write_string("SPACECRAFT")
             lcd.cursor_pos = (1, 0)
             lcd.write_string("ACTUATING...")
 
+            # Move to fuel
             servo.angle = 45
             sleep(1)
-
             servo.angle = -45
             sleep(1)
-
             servo.angle = 0
             sleep(1)
 
@@ -60,6 +61,7 @@ try:
         sleep(0.05)
 
 finally:
+    # Clean up
     servo.detach()
     lcd.clear()
     GPIO.cleanup()
