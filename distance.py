@@ -3,21 +3,19 @@ from time import sleep
 
 servo = AngularServo(
     18,
-    min_angle=-90,
-    max_angle=90,
-    min_pulse_width=0.5/1000,
-    max_pulse_width=2.5/1000
+    min_angle=-45,
+    max_angle=45,
+    min_pulse_width=1/1000,
+    max_pulse_width=2/1000
 )
 
 try:
-    servo.angle = -45
-    sleep(2)
+    while True:
+        servo.angle = -45
+        sleep(1)
 
-    servo.angle = 0
-    sleep(2)
-
-    servo.angle = 45
-    sleep(2)
+        servo.angle = 45
+        sleep(1)
 
 finally:
     servo.detach()
