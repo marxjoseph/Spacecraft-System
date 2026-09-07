@@ -1,32 +1,9 @@
-import RPi.GPIO as GPIO
-import time
+from gpiozero import DistanceSensor
+from time import sleep
 
-GPIO.setmode(GPIO.BCM)
+sensor = DistanceSensor(echo=24, trigger=23)
 
-GPIO_TRIG = 11
-GPIO_ECHO = 18
-
-GPIO.setup(GPIO_TRIG, GPIO.OUT)
-GPIO.setup(GPIO_ECHO, GPIO.IN)
-
-GPIO.output(GPIO_TRIG, GPIO.LOW)
-
-time.sleep(2)
-
-GPIO.output(GPIO_TRIG, GPIO.HIGH)
-time.sleep(0.00001)
-GPIO.output(GPIO_TRIG, GPIO.LOW)
-
-while GPIO.input(GPIO_ECHO) == 0:
-    start_time = time.time()
-
-while GPIO.input(GPIO_ECHO) == 1:
-    bounce_back_time = time.time()
-
-pulse_duration = bounce_back_time - start_time
-
-distance = round(pulse_duration * 17150, 2)
-
-print("Distance:", distance, "cm")
-
-GPIO.cleanup()
+while True:
+    distance_cm = sensor.distance * 100
+    print(f"Distance: {distance_cm:.2f} cm")
+    sleep(0.5)
