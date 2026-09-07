@@ -1,8 +1,7 @@
-import RPi.GPIO as GPIO
 from gpiozero import AngularServo, Button
 from RPLCD.gpio import CharLCD
 from time import sleep
-
+import RPi.GPIO as GPIO
 # Servo
 servo = AngularServo(
     18,
