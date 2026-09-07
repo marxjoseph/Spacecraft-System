@@ -1,4 +1,3 @@
-```python
 import RPi.GPIO as GPIO
 from gpiozero import AngularServo, Button
 from RPLCD.gpio import CharLCD
